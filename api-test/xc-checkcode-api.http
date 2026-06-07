@@ -1,0 +1,8 @@
+### 申请验证码
+POST {{checkcode_host}}/checkcode/pic
+
+### 申请验证码
+POST localhost:63075/checkcode/pic
+
+### 校验验证码
+POST {{checkcode_host}}/checkcode/verify?key=checkcode:8431de9e5a49403a9585733cf4ce916b&code=Y4HZ

@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xuecheng.base.config.LocalDateTimeConfig,\
+  com.xuecheng.base.exception.GlobalExceptionHandler,\
+  com.xuecheng.base.exception.ValidationGroups

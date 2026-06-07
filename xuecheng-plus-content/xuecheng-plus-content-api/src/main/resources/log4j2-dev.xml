@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="180" packages="">
+    <properties>
+        <property name="logdir">logs</property>
+        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} %level [%thread][%file:%line] - %msg%n%throwable</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN}"/>
+        </Console>
+
+        <RollingFile name="ErrorAppender" fileName="${logdir}/error.log"
+            filePattern="${logdir}/$${date:yyyy-MM-dd}/error.%d{yyyy-MM-dd-HH}.log" append="true">
+            <PatternLayout pattern="${PATTERN}"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="DebugAppender" fileName="${logdir}/info.log"
+            filePattern="${logdir}/$${date:yyyy-MM-dd}/info.%d{yyyy-MM-dd-HH}.log" append="true">
+            <PatternLayout pattern="${PATTERN}"/>
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        
+        <!--异步appender-->
+         <Async name="AsyncAppender" includeLocation="true">
+            <AppenderRef ref="ErrorAppender"/>
+            <AppenderRef ref="DebugAppender"/>
+        </Async>
+    </Appenders>
+    
+    <Loggers>
+         <!--过滤掉spring和mybatis的一些无用的debug信息
+        <logger name="org.springframework" level="INFO">
+        </logger>
+        <logger name="org.mybatis" level="INFO">
+        </logger>-->
+        <logger name="cn.itcast.wanxinp2p.consumer.mapper" level="DEBUG">
+        </logger>
+
+        <logger name="springfox" level="INFO">
+        </logger>
+		<logger name="org.apache.http" level="INFO">
+        </logger>
+
+        <!-- ================ 新增：Nacos 日志级别配置（核心修改） ================ -->
+        <!-- 1. 全局 Nacos 包，日志级别设为 INFO，停止 DEBUG 打印 -->
+        <logger name="com.alibaba.nacos" level="INFO" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="AsyncAppender"/>
+        </logger>
+        <!-- 2. 针对性关闭 Nacos 服务注册发现（naming）的 DEBUG 日志 -->
+        <logger name="com.alibaba.nacos.naming" level="INFO" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="AsyncAppender"/>
+        </logger>
+        <!-- 3. 针对性关闭 Nacos 配置中心（client.config）的 DEBUG 日志 -->
+        <logger name="com.alibaba.nacos.client.config" level="INFO" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="AsyncAppender"/>
+        </logger>
+
+        <!-- ================ 新增结束 ================ -->
+
+        <logger name="com.netflix.discovery" level="INFO">
+        </logger>
+        
+        <logger name="RocketmqCommon"  level="INFO" >
+		</logger>
+		
+		<logger name="RocketmqRemoting" level="INFO"  >
+		</logger>
+		
+		<logger name="RocketmqClient" level="WARN">
+		</logger>
+
+        <logger name="org.dromara.hmily" level="WARN">
+        </logger>
+
+        <logger name="org.dromara.hmily.lottery" level="WARN">
+        </logger>
+
+        <logger name="org.dromara.hmily.bonuspoint" level="WARN">
+        </logger>
+		
+        <!--OFF   0-->
+        <!--FATAL   100-->
+        <!--ERROR   200-->
+        <!--WARN   300-->
+        <!--INFO   400-->
+        <!--DEBUG   500-->
+        <!--TRACE   600-->
+        <!--ALL   Integer.MAX_VALUE-->
+        <Root level="info" includeLocation="true">
+            <AppenderRef ref="AsyncAppender"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="DebugAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,47 @@
+#微服务配置
+spring:
+  application:
+    name: orders-api
+  cloud:
+    nacos:
+      server-addr: 192.168.101.65:8848
+      discovery:
+        namespace: dev377
+        group: xuecheng-plus-project
+      config:
+        namespace: dev377
+        group: xuecheng-plus-project
+        file-extension: yaml
+        refresh-enabled: true
+        extension-configs:
+          - data-id: orders-service-${spring.profiles.active}.yaml
+            group: xuecheng-plus-project
+            refresh: true
+        shared-configs:
+          - data-id: swagger-${spring.profiles.active}.yaml
+            group: xuecheng-plus-common
+            refresh: true
+          - data-id: logging-${spring.profiles.active}.yaml
+            group: xuecheng-plus-common
+            refresh: true
+          - data-id: rabbitmq-${spring.profiles.active}.yaml
+            group: xuecheng-plus-common
+            refresh: true
+
+  profiles:
+    active: dev
+
+pay:
+  alipay:
+    APP_ID: 9021000162638435
+    APP_PRIVATE_KEY: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCy+7IzZAptn8eL7XNdlv0meAgR9rSuyC7+WdjigHQB+bCs0noLu4a8+dJiSj2NLN2k1IgvgnxzbrS1pxgA27x3YW1scIL8JmgWwAq9tCT4zMRQAihfM7eIc/MMbRX+RBI32XdjAeZ+5kxOan6pq4Z1UneTS/BLubKdRQUQZOi3nEpKRbrmdReMnRMzsFPvUMBppXMQaXGfDSGRsxVg3zaCTm3nlOuP/ORRHK+0hEeD7EkR1cn72MpPgSw2lLiYk4L8UwCDDjCzgpDaVfw0KGLcZ3UJiZ4NskVPLZjP4SvnJATuXV29rMnAutxYsrxUGriCMTBlLrerGjcR6OOUBhi/AgMBAAECggEABU5vBxUFNiDRkrV0gSbT1IskehvdWX0333SceIKkbdaQRV9sHOLvaLTjZuSalI/q9lMSwo3U0LtMgkI09PmOyd9KljdzurQMy/ffmaY4nmO7wj9+IOxwmYwOfaTSTRqJi7xXzMimo8aCJqUDolYig2Hxh51tv2D/CaidMNI9EAx2c188BXVUCN327AEUFTQFLiljS/pio94rTnpYmItV4UsdxfYD0/eW1J/SY0UjOMZBXFXig97KfnDhW5PueeoYu3viA9WENU4zclQhyCfXiq3RPGPLNlcwLMoo59baFl4dBZA9mZ458A62pHB1z8qr1YBklPSxB5NjzmO15VtZCQKBgQDkRkF7WzVhI0pu1fLVJ3DCtyqERCgYZ4iR/XgHtqPMvWJm70c9CewodxOyBTyX7+G4h3XdtyotFDHoK7WK281z6eVr6uFfBUEBaAqasZQ6X28CWVl9vtPc1CNoD0b9ERkonxXSVaS7yg3oI9k19RJcevcT2AnNFfxuAGT7lVnMzQKBgQDIuNNycR2F5lvCzkJK9sQj4dZPdTUDivGhi1EtsiV8ZUSwh0kZHakRulP1PYGX37zPtIEDW5EvUUNvMp+qZd8jjJ2a9LqU9xANmRYBbDrePdACq08kHHxQgQ5yXdFl4XqJnDCY/unw8KksLqTKMR5HtxcNv7O9nmpqoQ9lriN7uwKBgFSa/XYc7gHctJ+zyFbcUVy5ypZPNJUm+mUxjqU9OiSOJMSF9t9WqCKvT6txaW3eyMg93J+aXZVroLuuR5D5uoI1tIR0/6baKae9ygBfxNKFwH0cZKDIc3mrXpwY3XS6O5rkq4/TkkTPtKvPbZgkBvQj1yORtMBAX9jdaJAeYLQZAoGAU93eA4g91K++kXPLATWAGJoJCKQpZXSNp3jlj1lLDmHlxHiSU1swREb9Q4/ScRm783ExIq0EyaeDrJeTXQg5psnfJFqzBwEABR58slV9d1SOcD8Rzz3Tt3NlDOYkUxRWNd878wE30ENN/Db1BcJmK4LVsBn0SPtC7ZCkNVEAZHcCgYAyN/PWeN5Lxt42eWa8t+V8NHnaw8Mz0Zm66ZcStQd7uk3cL3pDMwyv2Z20Ix4YBiQrOfsdoOkdAnxfe9yT/MzAWaWT4gT0Hs6/oZxKmg6kYFHC7RufTJIB/VL7xii00li3ufwI3/1m6R+BHCbvRxc16Qhq+/q8j6p3qzu4Ihi/Ng==
+    ALIPAY_PUBLIC_KEY: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhUm/SGL2CxgHvM0IFYujXOrF5GgJrgiy19LMEJ5q8EL0tMOkpMkKI8o7q/nwgtuoUiBvn4WcJG8JmKQw+14kyLC2moaVLX/2zG+1wudjK/sCzraVF+ziqVTZebLrdVUZ5PrBkdMxz1jidjT0thzyRy9PHBhurhmlvAhG9XYpgxbCoNwUmz4thSkGfB1PWBE78Ikd+NBn5dzdfclJEtkTvbwC2XhGBcAyV9rD+oGed5bWMwpvtfZ0qkAktotJYA9an/NX0ujoprDJkncS9TrRXtArva8Ct46h1IE0cYv4dYTL7a+4+EBSvRZEF2r5KQR/k0Uj7IreiZHlXHrpz9F4jQIDAQAB
+
+
+minio:
+  endpoint: http://192.168.101.65:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucket:
+    files: mediafiles
+    videofiles: video
